@@ -1,6 +1,6 @@
 syntax = "proto3";
 package dto;
-option go_package ="github.com/grpc-project/proto";
+option go_package ="proto";
 service Server {
     rpc Fetch (FetchRequest) returns (FetchResponse) {}
     rpc List (ListRequest) returns (ListResponse) {}

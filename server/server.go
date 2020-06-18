@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"encoding/csv"
-	pb "github.com/grpc-project/proto"
+	pb "github.com/3hajk/grpc-project/proto"
 	"google.golang.org/grpc"
 	"log"
 	"net"
