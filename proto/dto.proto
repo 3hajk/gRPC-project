@@ -1,0 +1,35 @@
+syntax = "proto3";
+package dto;
+option go_package ="github.com/grpc-project/proto";
+service Server {
+    rpc Fetch (FetchRequest) returns (FetchResponse) {}
+    rpc List (ListRequest) returns (ListResponse) {}
+}
+
+message FetchRequest{
+    string url = 1;
+}
+
+message FetchResponse{
+    string error = 1;
+}
+
+message ListRequest{
+    uint64 offset = 1;
+    uint64 limit = 2;
+}
+
+message ListResponse {
+    uint64 page = 1;
+    uint64 pageSize = 2;
+    uint64 total = 3;
+    repeated Product list=4;
+    string error=5;
+}
+
+message Product {
+    string name = 1;
+    string price = 2;
+    uint64 changePrice = 3;
+    uint64 last = 4;
+}
