@@ -35,4 +35,4 @@ down:
 	@docker-compose down
 
 scale:
-    @docker-compose up -d --scale server=3
+	@docker-compose up -d --scale server=3

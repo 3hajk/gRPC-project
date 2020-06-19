@@ -1,6 +1,37 @@
 version: '3.3'
 services:
 
+  registrator:
+    image: gliderlabs/registrator:vendor
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    command: -ip=docker.for.mac.localhost -deregister=always -cleanup -tags=registrator consul://consul:8500
+    networks:
+      grpc:
+
+  consul:
+    image: library/consul:latest
+    restart: always
+    ports:
+      - 127.0.0.1:8500:8500
+    networks:
+      grpc:
+
+  traefik:
+    image: library/traefik:latest
+    restart: always
+    ports:
+      - 127.0.0.1:8080:8080 # UI
+      - 127.0.0.1:80:80 # HTTP
+    volumes:
+      - $PWD/config/traefik.toml:/etc/traefik/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      grpc:
+        aliases:
+          - frontend.local
+
   server:
     image: grpc-project/grpc-server:latest
     ports:
@@ -9,6 +40,21 @@ services:
       - PORT=:50051
     networks:
       grpc:
+        aliases:
+          - backend.local
+
+  server1:
+    image: grpc-project/grpc-server:latest
+    ports:
+      - 127.0.0.1::50052
+    environment:
+      - PORT=:50052
+    networks:
+      grpc:
+        aliases:
+          - backend.local
+
+
   mongodb:
     image: mongo:latest
     ports:
@@ -17,6 +63,7 @@ services:
       - "mongodb_data:/Users/3hak/data/db"
     networks:
       - grpc
+
 volumes:
   mongodb_data:
 networks:

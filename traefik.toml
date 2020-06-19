@@ -1,0 +1,25 @@
+debug = true
+
+defaultEntryPoints = ["http"]
+
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+
+[web]
+  address = ":8080"
+
+[file]
+
+[backends]
+  [backends.backend1]
+    [backends.backend1.servers.server1]
+    url = "http://backend.local:50051"
+
+
+[frontends]
+  [frontends.frontend1]
+  backend = "backend1"
+    [frontends.frontend1.routes.Echo]
+    rule = "Host:frontend.local"
