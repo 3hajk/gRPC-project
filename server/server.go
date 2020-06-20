@@ -4,40 +4,32 @@ import (
 	"context"
 	"encoding/csv"
 	"fmt"
+	db "github.com/3hajk/grpc-project/database"
 	pb "github.com/3hajk/grpc-project/proto"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"google.golang.org/grpc"
 	"log"
 	"net"
 	"net/http"
 	"os"
+	"os/signal"
+	"strconv"
 	"sync"
+	"time"
 )
 
 type routeGuideServer struct {
 	pb.UnimplementedServerServer
-	mu sync.Mutex // protects routeNotes
-}
-
-type row struct {
-	Name    string
-	Price   float64
-	cont    int64
-	updated uint64
+	mu sync.Mutex
+	db *mongo.Client
 }
 
 func newServer() *routeGuideServer {
-	s := &routeGuideServer{}
+	s := &routeGuideServer{
+		db: db.Connect(),
+	}
 	return s
-}
-
-func saveData(data [][]string) error {
-
-	fmt.Println(data)
-	fmt.Println(data[0])
-	fmt.Println(data[0][1])
-	return nil
 }
 
 func (s *routeGuideServer) Fetch(ctx context.Context, req *pb.FetchRequest) (*pb.FetchResponse, error) {
@@ -49,11 +41,26 @@ func (s *routeGuideServer) Fetch(ctx context.Context, req *pb.FetchRequest) (*pb
 	reader := csv.NewReader(resp.Body)
 	reader.Comma = ';'
 
-	data, err := reader.ReadAll()
+	productList, err := reader.ReadAll()
 	if err != nil {
 		return &pb.FetchResponse{Error: err.Error()}, err
 	}
-	saveData(data)
+	for _, row := range productList {
+		fmt.Println(row)
+
+		price, err := strconv.ParseFloat(row[1], 32)
+		if err != nil {
+			price = 0
+		}
+		item := db.ProductItem{
+			Name:       row[0],
+			Price:      price,
+			LastUpdate: primitive.Timestamp{T: uint32(time.Now().Unix())},
+			Count:      1,
+		}
+		fmt.Println(item)
+		_ = db.InsertProductToTheDB(ctx, s.db, item)
+	}
 	return &pb.FetchResponse{}, nil
 }
 
@@ -66,6 +73,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	listener, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %s", err.Error())
@@ -75,28 +83,21 @@ func main() {
 	defer grpcServer.Stop()
 
 	pb.RegisterServerServer(grpcServer, newServer())
-	grpcServer.Serve(listener)
 
-	// Set client options
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
-
-	// Connect to MongoDB
-	client, err := mongo.Connect(context.TODO(), clientOptions)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Check the connection
-	err = client.Ping(context.TODO(), nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("Connected to MongoDB!")
-
-	// Get a handle for your collection
-	//collection := client.Database("test").Collection("trainers")
-
-	//collection.FindOneAndUpdate()
-
+	// Start the server in a child routine
+	go func() {
+		if err := grpcServer.Serve(listener); err != nil {
+			log.Fatalf("Failed to serve: %v", err)
+		}
+	}()
+	fmt.Println("Server succesfully started on port :", port)
+	// Create a channel to receive OS signals
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt)
+	<-c
+	// After receiving CTRL+C Properly stop the server
+	log.Println("\nStopping the server...")
+	grpcServer.Stop()
+	listener.Close()
+	log.Println("Done.")
 }

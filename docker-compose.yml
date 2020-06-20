@@ -11,7 +11,7 @@ services:
       grpc:
 
   consul:
-    image: library/consul:latest
+    image: consul:1.0.6
     restart: always
     ports:
       - 127.0.0.1:8500:8500
@@ -19,13 +19,13 @@ services:
       grpc:
 
   traefik:
-    image: library/traefik:latest
+    image: traefik:1.6
     restart: always
     ports:
       - 127.0.0.1:8080:8080 # UI
       - 127.0.0.1:80:80 # HTTP
     volumes:
-      - $PWD/config/traefik.toml:/etc/traefik/traefik.toml
+      - $PWD/traefik.toml:/etc/traefik/traefik.toml
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       grpc:
