@@ -17,20 +17,27 @@ message FetchDataResponse{
 }
 
 message ListProductsRequest{
-    uint64 offset = 1;
-    uint64 limit = 2;
+    Page paging =1;
+    Sort sorting =2;
+}
+
+message Page{
+    int64 skip = 1;
+    int64 limit = 2;
+}
+
+message Sort {
+    string name = 1;
+    int32 direct = 2;
 }
 
 message ListProductsResponse {
-    uint64 page = 1;
-    uint64 pageSize = 2;
-    uint64 total = 3;
-    repeated Product list=4;
-    string error=5;
+    int32 pageSize = 1;
+    repeated Product list=2;
 }
 
 message StreamProductsRequest{
-
+    Sort sorting =1;
 }
 
 message StreamProductsResponse{
@@ -39,7 +46,7 @@ message StreamProductsResponse{
 
 message Product {
     string name = 1;
-    string price = 2;
-    uint64 changePrice = 3;
-    uint64 lastUpdate = 4;
+    float price = 2;
+    int32 changePrice = 3;
+    uint32 lastUpdate = 4;
 }

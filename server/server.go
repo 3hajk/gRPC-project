@@ -6,20 +6,25 @@ import (
 	"fmt"
 	db "github.com/3hajk/grpc-project/database"
 	pb "github.com/3hajk/grpc-project/proto"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"log"
 	"net"
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"sync"
 	"time"
 )
 
 type routeGuideServer struct {
-	pb.UnimplementedServerServer
+	pb.UnimplementedProductServiceServer
 	mu sync.Mutex
 	db *mongo.Client
 }
@@ -48,13 +53,13 @@ func (s *routeGuideServer) Fetch(ctx context.Context, req *pb.FetchDataRequest) 
 	for _, row := range productList {
 		fmt.Println(row)
 
-		//price, err := strconv.ParseFloat(row[1], 32)
-		//if err != nil {
-		//	price = 0
-		//}
+		price, err := strconv.ParseFloat(row[1], 32)
+		if err != nil {
+			price = 0
+		}
 		item := db.ProductItem{
 			Name:       row[0],
-			Price:      row[1],
+			Price:      price,
 			LastUpdate: primitive.Timestamp{T: uint32(time.Now().Unix())},
 			Count:      1,
 		}
@@ -67,38 +72,71 @@ func (s *routeGuideServer) Fetch(ctx context.Context, req *pb.FetchDataRequest) 
 	return &pb.FetchDataResponse{}, nil
 }
 
-//func (sr *routeGuideServer) GetBatchLevels(from, to, skip, limit int64, userId string) ([]*dto.SugarLevel, error) {
-//	ctx := context.Background()
-//	collection := sr.db.Database(sr.GetDbName()).Collection(srName)
-//	opts := &options.FindOptions{
-//		Skip:&skip,
-//		Limit:&limit,
-//		Sort:bson.D{
-//			{"timestamp", 1}}}
-//	cursor, err := collection.Find(ctx, bson.D{
-//		{  "userid",userId},
-//		{  "timestamp", bson.D{
-//			{"$gte", from}, {"$lte", to}},
-//		}}, opts)
-//	if err != nil {  log.Println("Couldn't get sugar levels", "err", err)  return nil, err }
-//	defer cursor.Close(ctx)
-//	results := make([]*dto.SugarLevel, 0, 0)
-//	for cursor.Next(context.Background()) {
-//		var result = new(dto.SugarLevel)
-//		err := cursor.Decode(result)
-//		if err != nil {   return results, err  }
-//		results = append(results, result)
-//	}
-//	return results, nil
-//}
-
 func (s *routeGuideServer) List(ctx context.Context, req *pb.ListProductsRequest) (*pb.ListProductsResponse, error) {
 
-	return nil, nil
+	collection := s.db.Database(db.DBNAME).Collection("products")
+	skip := req.GetPaging().GetSkip()
+	limit := req.GetPaging().GetLimit()
+	opts := &options.FindOptions{
+		Skip:  &skip,
+		Limit: &limit,
+		Sort:  bson.M{req.GetSorting().GetName(): req.GetSorting().GetDirect()},
+	}
+	cursor, err := collection.Find(ctx, bson.D{}, opts)
+	if err != nil {
+		log.Println("Couldn't get sugar levels", "err", err)
+		return nil, err
+	}
+	defer cursor.Close(ctx)
+	results := make([]*pb.Product, 0, 0)
+	for cursor.Next(context.Background()) {
+		var result = new(db.ProductItem)
+		err := cursor.Decode(result)
+		if err != nil {
+			break
+		}
+		results = append(results, &pb.Product{
+			Name:        result.Name,
+			Price:       float32(result.Price),
+			LastUpdate:  result.LastUpdate.T,
+			ChangePrice: int32(result.Count),
+		})
+	}
+	return &pb.ListProductsResponse{
+		PageSize: int32(len(results)),
+		List:     results,
+	}, nil
 }
 
-func (s *routeGuideServer) Stream(req *pb.StreamProductsRequest, stream ProductService_StreamServer) error {
+func (s *routeGuideServer) Stream(req *pb.StreamProductsRequest, stream pb.ProductService_StreamServer) error {
 
+	filter := bson.M{
+		"Sort": bson.M{req.GetSorting().GetName(): req.GetSorting().GetDirect()},
+	}
+	data := &db.ProductItem{}
+
+	collection := s.db.Database(db.DBNAME).Collection("products")
+	cursor, err := collection.Find(context.Background(), filter)
+	if err != nil {
+		return err
+	}
+	defer cursor.Close(context.Background())
+	for cursor.Next(context.Background()) {
+		if err != nil {
+			return err
+		}
+		stream.Send(&pb.StreamProductsResponse{
+			Product: &pb.Product{
+				Name:        data.Name,
+				Price:       float32(data.Price),
+				LastUpdate:  data.LastUpdate.T,
+				ChangePrice: int32(data.Count),
+			},
+		})
+		if err = cursor.Err(); err != nil {
+			return status.Errorf(codes.Internal, fmt.Sprintf("[-] Cursor Error: %v", err))
+		}
+	}
 	return nil
 }
 

@@ -53,14 +53,6 @@ func InsertProductToTheDB(ctx context.Context, client *mongo.Client, data Produc
 	opts := options.Update().SetUpsert(true)
 	filter := bson.M{
 		"name": data.Name,
-		"price": bson.M{
-			"$ne": data.Price,
-		},
-		//"price": bson.M{
-		//	"$not": bson.M {
-		//		"$gt": data.Price,
-		//	},
-		//},
 	}
 
 	query := bson.M{
