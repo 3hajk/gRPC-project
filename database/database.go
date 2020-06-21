@@ -11,7 +11,7 @@ import (
 const DBNAME = "test"
 
 func Connect() (client *mongo.Client) {
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	clientOptions := options.Client().ApplyURI("mongodb://127.0.0.1:27017")
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatalf("[-] Error while connecting to the database: %v", err)

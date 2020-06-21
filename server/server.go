@@ -143,7 +143,6 @@ func (s *routeGuideServer) Stream(req *pb.StreamProductsRequest, stream pb.Produ
 func main() {
 
 	port := os.Getenv("PORT")
-
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	listener, err := net.Listen("tcp", port)
 	if err != nil {

@@ -35,4 +35,8 @@ prefix = "traefik"
   [frontends.frontend1]
   backend = "backend1"
     [frontends.frontend1.routes.Fetch]
+    rule = "Host:frontend1.local"
+    [frontends.frontend1.routes.List]
+    rule = "Host:frontend1.local"
+    [frontends.frontend1.routes.Echo]
     rule = "Host:frontend.local"
