@@ -17,7 +17,6 @@ import (
 	"net"
 	"net/http"
 	"os"
-	"os/signal"
 	"strconv"
 	"sync"
 	"time"
@@ -160,15 +159,14 @@ func main() {
 		if err := grpcServer.Serve(listener); err != nil {
 			log.Fatalf("Failed to serve: %v", err)
 		}
+		defer listener.Close()
 	}()
 	log.Println("Server succesfully started on port :", port)
-	// Create a channel to receive OS signals
-	c := make(chan os.Signal)
-	signal.Notify(c, os.Interrupt)
-	<-c
-	// After receiving CTRL+C Properly stop the server
-	log.Println("\nStopping the server...")
-	grpcServer.Stop()
-	listener.Close()
-	log.Println("Done.")
+	//// Create a channel to receive OS signals
+	//c := make(chan os.Signal)
+	//signal.Notify(c, os.Interrupt)
+	//<-c
+	//// After receiving CTRL+C Properly stop the server
+	//log.Println("\nStopping the server...")
+	//log.Println("Done.")
 }
