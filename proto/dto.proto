@@ -1,25 +1,27 @@
 syntax = "proto3";
 package dto;
 option go_package ="proto";
-service Server {
-    rpc Fetch (FetchRequest) returns (FetchResponse) {}
-    rpc List (ListRequest) returns (ListResponse) {}
+
+service ProductService {
+    rpc Fetch (FetchDataRequest) returns (FetchDataResponse) {}
+    rpc List (ListProductsRequest) returns (ListProductsResponse) {}
+    rpc Stream (StreamProductsRequest) returns (stream StreamProductsResponse) {}
 }
 
-message FetchRequest{
+message FetchDataRequest{
     string url = 1;
 }
 
-message FetchResponse{
+message FetchDataResponse{
     string error = 1;
 }
 
-message ListRequest{
+message ListProductsRequest{
     uint64 offset = 1;
     uint64 limit = 2;
 }
 
-message ListResponse {
+message ListProductsResponse {
     uint64 page = 1;
     uint64 pageSize = 2;
     uint64 total = 3;
@@ -27,9 +29,17 @@ message ListResponse {
     string error=5;
 }
 
+message StreamProductsRequest{
+
+}
+
+message StreamProductsResponse{
+    Product product = 1;
+}
+
 message Product {
     string name = 1;
     string price = 2;
     uint64 changePrice = 3;
-    uint64 last = 4;
+    uint64 lastUpdate = 4;
 }

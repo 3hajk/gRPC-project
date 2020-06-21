@@ -14,7 +14,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"strconv"
 	"sync"
 	"time"
 )
@@ -29,13 +28,14 @@ func newServer() *routeGuideServer {
 	s := &routeGuideServer{
 		db: db.Connect(),
 	}
+	db.SetIndex(s.db)
 	return s
 }
 
-func (s *routeGuideServer) Fetch(ctx context.Context, req *pb.FetchRequest) (*pb.FetchResponse, error) {
+func (s *routeGuideServer) Fetch(ctx context.Context, req *pb.FetchDataRequest) (*pb.FetchDataResponse, error) {
 	resp, err := http.Get(req.Url)
 	if err != nil {
-		return &pb.FetchResponse{Error: err.Error()}, err
+		return &pb.FetchDataResponse{Error: err.Error()}, err
 	}
 	defer resp.Body.Close()
 	reader := csv.NewReader(resp.Body)
@@ -43,30 +43,63 @@ func (s *routeGuideServer) Fetch(ctx context.Context, req *pb.FetchRequest) (*pb
 
 	productList, err := reader.ReadAll()
 	if err != nil {
-		return &pb.FetchResponse{Error: err.Error()}, err
+		return &pb.FetchDataResponse{Error: err.Error()}, err
 	}
 	for _, row := range productList {
 		fmt.Println(row)
 
-		price, err := strconv.ParseFloat(row[1], 32)
-		if err != nil {
-			price = 0
-		}
+		//price, err := strconv.ParseFloat(row[1], 32)
+		//if err != nil {
+		//	price = 0
+		//}
 		item := db.ProductItem{
 			Name:       row[0],
-			Price:      price,
+			Price:      row[1],
 			LastUpdate: primitive.Timestamp{T: uint32(time.Now().Unix())},
 			Count:      1,
 		}
 		fmt.Println(item)
-		_ = db.InsertProductToTheDB(ctx, s.db, item)
+		err = db.InsertProductToTheDB(ctx, s.db, item)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
 	}
-	return &pb.FetchResponse{}, nil
+	return &pb.FetchDataResponse{}, nil
 }
 
-func (s *routeGuideServer) List(ctx context.Context, req *pb.ListRequest) (*pb.ListResponse, error) {
+//func (sr *routeGuideServer) GetBatchLevels(from, to, skip, limit int64, userId string) ([]*dto.SugarLevel, error) {
+//	ctx := context.Background()
+//	collection := sr.db.Database(sr.GetDbName()).Collection(srName)
+//	opts := &options.FindOptions{
+//		Skip:&skip,
+//		Limit:&limit,
+//		Sort:bson.D{
+//			{"timestamp", 1}}}
+//	cursor, err := collection.Find(ctx, bson.D{
+//		{  "userid",userId},
+//		{  "timestamp", bson.D{
+//			{"$gte", from}, {"$lte", to}},
+//		}}, opts)
+//	if err != nil {  log.Println("Couldn't get sugar levels", "err", err)  return nil, err }
+//	defer cursor.Close(ctx)
+//	results := make([]*dto.SugarLevel, 0, 0)
+//	for cursor.Next(context.Background()) {
+//		var result = new(dto.SugarLevel)
+//		err := cursor.Decode(result)
+//		if err != nil {   return results, err  }
+//		results = append(results, result)
+//	}
+//	return results, nil
+//}
+
+func (s *routeGuideServer) List(ctx context.Context, req *pb.ListProductsRequest) (*pb.ListProductsResponse, error) {
 
 	return nil, nil
+}
+
+func (s *routeGuideServer) Stream(req *pb.StreamProductsRequest, stream ProductService_StreamServer) error {
+
+	return nil
 }
 
 func main() {
@@ -82,7 +115,7 @@ func main() {
 	grpcServer := grpc.NewServer(opts...)
 	defer grpcServer.Stop()
 
-	pb.RegisterServerServer(grpcServer, newServer())
+	pb.RegisterProductServiceServer(grpcServer, newServer())
 
 	// Start the server in a child routine
 	go func() {
@@ -90,7 +123,7 @@ func main() {
 			log.Fatalf("Failed to serve: %v", err)
 		}
 	}()
-	fmt.Println("Server succesfully started on port :", port)
+	log.Println("Server succesfully started on port :", port)
 	// Create a channel to receive OS signals
 	c := make(chan os.Signal)
 	signal.Notify(c, os.Interrupt)

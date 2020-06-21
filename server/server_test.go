@@ -16,7 +16,7 @@ func TestFetch(t *testing.T) {
 	grpc := newServer()
 
 	request := &proto.FetchRequest{
-		Url: "http://127.0.0.1/data.csv",
+		Url: "http://127.0.0.1:81/data2.csv",
 	}
 
 	response, err := grpc.Fetch(ctx, request)

@@ -11,20 +11,32 @@ import (
 const DBNAME = "test"
 
 func Connect() (client *mongo.Client) {
-	// Set client options
 	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
-	// Connect to MongoDB
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatalf("[-] Error while connecting to the database: %v", err)
 	}
-
 	err = client.Ping(context.TODO(), nil)
 	if err != nil {
 		log.Fatalf("[-] Ping error: %v", err)
 	}
 	log.Println("[+] Succesfully connected to the database.")
+
 	return client
+}
+
+func SetIndex(client *mongo.Client) {
+	index := mongo.IndexModel{
+		Keys: bson.M{
+			"name": 1,
+		},
+		Options: options.Index().SetUnique(true),
+	}
+	collection := client.Database(DBNAME).Collection("products")
+	_, err := collection.Indexes().CreateOne(context.TODO(), index)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func Close(client *mongo.Client) {
@@ -39,17 +51,25 @@ func Close(client *mongo.Client) {
 func InsertProductToTheDB(ctx context.Context, client *mongo.Client, data ProductItem) error {
 	collection := client.Database(DBNAME).Collection("products")
 	opts := options.Update().SetUpsert(true)
-	filter := bson.D{{"Name", data.Name}}
+	filter := bson.M{
+		"name": data.Name,
+		"price": bson.M{
+			"$ne": data.Price,
+		},
+		//"price": bson.M{
+		//	"$not": bson.M {
+		//		"$gt": data.Price,
+		//	},
+		//},
+	}
+
 	query := bson.M{
 		"$setOnInsert": bson.M{
-			"lastUpdate": data.LastUpdate,
-			"price":      data.Price,
+			"name": data.Name,
 		},
 		"$set": bson.M{
-			"name":       data.Name,
 			"price":      data.Price,
 			"lastUpdate": data.LastUpdate,
-			"count":      data.Count,
 		},
 		"$inc": bson.M{
 			"count": 1,

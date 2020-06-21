@@ -29,7 +29,7 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
-type FetchRequest struct {
+type FetchDataRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -37,8 +37,8 @@ type FetchRequest struct {
 	Url string `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
 }
 
-func (x *FetchRequest) Reset() {
-	*x = FetchRequest{}
+func (x *FetchDataRequest) Reset() {
+	*x = FetchDataRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_dto_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -46,13 +46,13 @@ func (x *FetchRequest) Reset() {
 	}
 }
 
-func (x *FetchRequest) String() string {
+func (x *FetchDataRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FetchRequest) ProtoMessage() {}
+func (*FetchDataRequest) ProtoMessage() {}
 
-func (x *FetchRequest) ProtoReflect() protoreflect.Message {
+func (x *FetchDataRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_dto_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -64,19 +64,19 @@ func (x *FetchRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FetchRequest.ProtoReflect.Descriptor instead.
-func (*FetchRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use FetchDataRequest.ProtoReflect.Descriptor instead.
+func (*FetchDataRequest) Descriptor() ([]byte, []int) {
 	return file_proto_dto_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *FetchRequest) GetUrl() string {
+func (x *FetchDataRequest) GetUrl() string {
 	if x != nil {
 		return x.Url
 	}
 	return ""
 }
 
-type FetchResponse struct {
+type FetchDataResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -84,8 +84,8 @@ type FetchResponse struct {
 	Error string `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 }
 
-func (x *FetchResponse) Reset() {
-	*x = FetchResponse{}
+func (x *FetchDataResponse) Reset() {
+	*x = FetchDataResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_dto_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -93,13 +93,13 @@ func (x *FetchResponse) Reset() {
 	}
 }
 
-func (x *FetchResponse) String() string {
+func (x *FetchDataResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FetchResponse) ProtoMessage() {}
+func (*FetchDataResponse) ProtoMessage() {}
 
-func (x *FetchResponse) ProtoReflect() protoreflect.Message {
+func (x *FetchDataResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_dto_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -111,19 +111,19 @@ func (x *FetchResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FetchResponse.ProtoReflect.Descriptor instead.
-func (*FetchResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use FetchDataResponse.ProtoReflect.Descriptor instead.
+func (*FetchDataResponse) Descriptor() ([]byte, []int) {
 	return file_proto_dto_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *FetchResponse) GetError() string {
+func (x *FetchDataResponse) GetError() string {
 	if x != nil {
 		return x.Error
 	}
 	return ""
 }
 
-type ListRequest struct {
+type ListProductsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -132,8 +132,8 @@ type ListRequest struct {
 	Limit  uint64 `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
 }
 
-func (x *ListRequest) Reset() {
-	*x = ListRequest{}
+func (x *ListProductsRequest) Reset() {
+	*x = ListProductsRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_dto_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -141,13 +141,13 @@ func (x *ListRequest) Reset() {
 	}
 }
 
-func (x *ListRequest) String() string {
+func (x *ListProductsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListRequest) ProtoMessage() {}
+func (*ListProductsRequest) ProtoMessage() {}
 
-func (x *ListRequest) ProtoReflect() protoreflect.Message {
+func (x *ListProductsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_dto_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -159,26 +159,26 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
-func (*ListRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListProductsRequest.ProtoReflect.Descriptor instead.
+func (*ListProductsRequest) Descriptor() ([]byte, []int) {
 	return file_proto_dto_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ListRequest) GetOffset() uint64 {
+func (x *ListProductsRequest) GetOffset() uint64 {
 	if x != nil {
 		return x.Offset
 	}
 	return 0
 }
 
-func (x *ListRequest) GetLimit() uint64 {
+func (x *ListProductsRequest) GetLimit() uint64 {
 	if x != nil {
 		return x.Limit
 	}
 	return 0
 }
 
-type ListResponse struct {
+type ListProductsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -190,8 +190,8 @@ type ListResponse struct {
 	Error    string     `protobuf:"bytes,5,opt,name=error,proto3" json:"error,omitempty"`
 }
 
-func (x *ListResponse) Reset() {
-	*x = ListResponse{}
+func (x *ListProductsResponse) Reset() {
+	*x = ListProductsResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_dto_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -199,13 +199,13 @@ func (x *ListResponse) Reset() {
 	}
 }
 
-func (x *ListResponse) String() string {
+func (x *ListProductsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListResponse) ProtoMessage() {}
+func (*ListProductsResponse) ProtoMessage() {}
 
-func (x *ListResponse) ProtoReflect() protoreflect.Message {
+func (x *ListProductsResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_dto_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -217,44 +217,129 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
-func (*ListResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListProductsResponse.ProtoReflect.Descriptor instead.
+func (*ListProductsResponse) Descriptor() ([]byte, []int) {
 	return file_proto_dto_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ListResponse) GetPage() uint64 {
+func (x *ListProductsResponse) GetPage() uint64 {
 	if x != nil {
 		return x.Page
 	}
 	return 0
 }
 
-func (x *ListResponse) GetPageSize() uint64 {
+func (x *ListProductsResponse) GetPageSize() uint64 {
 	if x != nil {
 		return x.PageSize
 	}
 	return 0
 }
 
-func (x *ListResponse) GetTotal() uint64 {
+func (x *ListProductsResponse) GetTotal() uint64 {
 	if x != nil {
 		return x.Total
 	}
 	return 0
 }
 
-func (x *ListResponse) GetList() []*Product {
+func (x *ListProductsResponse) GetList() []*Product {
 	if x != nil {
 		return x.List
 	}
 	return nil
 }
 
-func (x *ListResponse) GetError() string {
+func (x *ListProductsResponse) GetError() string {
 	if x != nil {
 		return x.Error
 	}
 	return ""
+}
+
+type StreamProductsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *StreamProductsRequest) Reset() {
+	*x = StreamProductsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_dto_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StreamProductsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamProductsRequest) ProtoMessage() {}
+
+func (x *StreamProductsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_dto_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamProductsRequest.ProtoReflect.Descriptor instead.
+func (*StreamProductsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_dto_proto_rawDescGZIP(), []int{4}
+}
+
+type StreamProductsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Product *Product `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
+}
+
+func (x *StreamProductsResponse) Reset() {
+	*x = StreamProductsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_dto_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StreamProductsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamProductsResponse) ProtoMessage() {}
+
+func (x *StreamProductsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_dto_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamProductsResponse.ProtoReflect.Descriptor instead.
+func (*StreamProductsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_dto_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *StreamProductsResponse) GetProduct() *Product {
+	if x != nil {
+		return x.Product
+	}
+	return nil
 }
 
 type Product struct {
@@ -265,13 +350,13 @@ type Product struct {
 	Name        string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Price       string `protobuf:"bytes,2,opt,name=price,proto3" json:"price,omitempty"`
 	ChangePrice uint64 `protobuf:"varint,3,opt,name=changePrice,proto3" json:"changePrice,omitempty"`
-	Last        uint64 `protobuf:"varint,4,opt,name=last,proto3" json:"last,omitempty"`
+	LastUpdate  uint64 `protobuf:"varint,4,opt,name=lastUpdate,proto3" json:"lastUpdate,omitempty"`
 }
 
 func (x *Product) Reset() {
 	*x = Product{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_dto_proto_msgTypes[4]
+		mi := &file_proto_dto_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -284,7 +369,7 @@ func (x *Product) String() string {
 func (*Product) ProtoMessage() {}
 
 func (x *Product) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_dto_proto_msgTypes[4]
+	mi := &file_proto_dto_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -297,7 +382,7 @@ func (x *Product) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Product.ProtoReflect.Descriptor instead.
 func (*Product) Descriptor() ([]byte, []int) {
-	return file_proto_dto_proto_rawDescGZIP(), []int{4}
+	return file_proto_dto_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *Product) GetName() string {
@@ -321,9 +406,9 @@ func (x *Product) GetChangePrice() uint64 {
 	return 0
 }
 
-func (x *Product) GetLast() uint64 {
+func (x *Product) GetLastUpdate() uint64 {
 	if x != nil {
-		return x.Last
+		return x.LastUpdate
 	}
 	return 0
 }
@@ -332,39 +417,53 @@ var File_proto_dto_proto protoreflect.FileDescriptor
 
 var file_proto_dto_proto_rawDesc = []byte{
 	0x0a, 0x0f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x64, 0x74, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x12, 0x03, 0x64, 0x74, 0x6f, 0x22, 0x20, 0x0a, 0x0c, 0x46, 0x65, 0x74, 0x63, 0x68, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x75, 0x72, 0x6c, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x03, 0x75, 0x72, 0x6c, 0x22, 0x25, 0x0a, 0x0d, 0x46, 0x65, 0x74, 0x63,
-	0x68, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72, 0x72,
-	0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x22,
-	0x3b, 0x0a, 0x0b, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16,
+	0x6f, 0x12, 0x03, 0x64, 0x74, 0x6f, 0x22, 0x24, 0x0a, 0x10, 0x46, 0x65, 0x74, 0x63, 0x68, 0x44,
+	0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x75, 0x72,
+	0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x75, 0x72, 0x6c, 0x22, 0x29, 0x0a, 0x11,
+	0x46, 0x65, 0x74, 0x63, 0x68, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x22, 0x43, 0x0a, 0x13, 0x4c, 0x69, 0x73, 0x74, 0x50,
+	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16,
 	0x0a, 0x06, 0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06,
 	0x6f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x22, 0x8c, 0x01, 0x0a,
-	0x0c, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a,
-	0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x04, 0x70, 0x61, 0x67,
-	0x65, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x04, 0x52, 0x08, 0x70, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x14, 0x0a,
-	0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x74, 0x6f,
-	0x74, 0x61, 0x6c, 0x12, 0x20, 0x0a, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x04, 0x20, 0x03, 0x28,
-	0x0b, 0x32, 0x0c, 0x2e, 0x64, 0x74, 0x6f, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52,
-	0x04, 0x6c, 0x69, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x05,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x22, 0x69, 0x0a, 0x07, 0x50,
-	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72,
-	0x69, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65,
-	0x12, 0x20, 0x0a, 0x0b, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x50, 0x72, 0x69, 0x63, 0x65, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x50, 0x72, 0x69,
-	0x63, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x6c, 0x61, 0x73, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x04,
-	0x52, 0x04, 0x6c, 0x61, 0x73, 0x74, 0x32, 0x69, 0x0a, 0x06, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72,
-	0x12, 0x30, 0x0a, 0x05, 0x46, 0x65, 0x74, 0x63, 0x68, 0x12, 0x11, 0x2e, 0x64, 0x74, 0x6f, 0x2e,
-	0x46, 0x65, 0x74, 0x63, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e, 0x64,
-	0x74, 0x6f, 0x2e, 0x46, 0x65, 0x74, 0x63, 0x68, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x22, 0x00, 0x12, 0x2d, 0x0a, 0x04, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x10, 0x2e, 0x64, 0x74, 0x6f,
-	0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x11, 0x2e, 0x64,
-	0x74, 0x6f, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
-	0x00, 0x42, 0x07, 0x5a, 0x05, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x22, 0x94, 0x01, 0x0a,
+	0x14, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x04, 0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x61, 0x67,
+	0x65, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x08, 0x70, 0x61, 0x67,
+	0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x20, 0x0a, 0x04, 0x6c,
+	0x69, 0x73, 0x74, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x64, 0x74, 0x6f, 0x2e,
+	0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x12, 0x14, 0x0a,
+	0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72,
+	0x72, 0x6f, 0x72, 0x22, 0x17, 0x0a, 0x15, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x50, 0x72, 0x6f,
+	0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x40, 0x0a, 0x16,
+	0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x26, 0x0a, 0x07, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63,
+	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x64, 0x74, 0x6f, 0x2e, 0x50, 0x72,
+	0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x07, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x22, 0x75,
+	0x0a, 0x07, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a,
+	0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x72,
+	0x69, 0x63, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x50, 0x72, 0x69,
+	0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0b, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65,
+	0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x6c, 0x61, 0x73, 0x74, 0x55, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0a, 0x6c, 0x61, 0x73, 0x74, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x32, 0xd0, 0x01, 0x0a, 0x0e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63,
+	0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x38, 0x0a, 0x05, 0x46, 0x65, 0x74, 0x63,
+	0x68, 0x12, 0x15, 0x2e, 0x64, 0x74, 0x6f, 0x2e, 0x46, 0x65, 0x74, 0x63, 0x68, 0x44, 0x61, 0x74,
+	0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x64, 0x74, 0x6f, 0x2e, 0x46,
+	0x65, 0x74, 0x63, 0x68, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x00, 0x12, 0x3d, 0x0a, 0x04, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x18, 0x2e, 0x64, 0x74, 0x6f,
+	0x2e, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e, 0x64, 0x74, 0x6f, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x50,
+	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x45, 0x0a, 0x06, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x12, 0x1a, 0x2e, 0x64, 0x74,
+	0x6f, 0x2e, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x64, 0x74, 0x6f, 0x2e, 0x53, 0x74,
+	0x72, 0x65, 0x61, 0x6d, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x30, 0x01, 0x42, 0x07, 0x5a, 0x05, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -379,25 +478,30 @@ func file_proto_dto_proto_rawDescGZIP() []byte {
 	return file_proto_dto_proto_rawDescData
 }
 
-var file_proto_dto_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_dto_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_proto_dto_proto_goTypes = []interface{}{
-	(*FetchRequest)(nil),  // 0: dto.FetchRequest
-	(*FetchResponse)(nil), // 1: dto.FetchResponse
-	(*ListRequest)(nil),   // 2: dto.ListRequest
-	(*ListResponse)(nil),  // 3: dto.ListResponse
-	(*Product)(nil),       // 4: dto.Product
+	(*FetchDataRequest)(nil),       // 0: dto.FetchDataRequest
+	(*FetchDataResponse)(nil),      // 1: dto.FetchDataResponse
+	(*ListProductsRequest)(nil),    // 2: dto.ListProductsRequest
+	(*ListProductsResponse)(nil),   // 3: dto.ListProductsResponse
+	(*StreamProductsRequest)(nil),  // 4: dto.StreamProductsRequest
+	(*StreamProductsResponse)(nil), // 5: dto.StreamProductsResponse
+	(*Product)(nil),                // 6: dto.Product
 }
 var file_proto_dto_proto_depIdxs = []int32{
-	4, // 0: dto.ListResponse.list:type_name -> dto.Product
-	0, // 1: dto.Server.Fetch:input_type -> dto.FetchRequest
-	2, // 2: dto.Server.List:input_type -> dto.ListRequest
-	1, // 3: dto.Server.Fetch:output_type -> dto.FetchResponse
-	3, // 4: dto.Server.List:output_type -> dto.ListResponse
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	6, // 0: dto.ListProductsResponse.list:type_name -> dto.Product
+	6, // 1: dto.StreamProductsResponse.product:type_name -> dto.Product
+	0, // 2: dto.ProductService.Fetch:input_type -> dto.FetchDataRequest
+	2, // 3: dto.ProductService.List:input_type -> dto.ListProductsRequest
+	4, // 4: dto.ProductService.Stream:input_type -> dto.StreamProductsRequest
+	1, // 5: dto.ProductService.Fetch:output_type -> dto.FetchDataResponse
+	3, // 6: dto.ProductService.List:output_type -> dto.ListProductsResponse
+	5, // 7: dto.ProductService.Stream:output_type -> dto.StreamProductsResponse
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_proto_dto_proto_init() }
@@ -407,7 +511,7 @@ func file_proto_dto_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_proto_dto_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FetchRequest); i {
+			switch v := v.(*FetchDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -419,7 +523,7 @@ func file_proto_dto_proto_init() {
 			}
 		}
 		file_proto_dto_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FetchResponse); i {
+			switch v := v.(*FetchDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -431,7 +535,7 @@ func file_proto_dto_proto_init() {
 			}
 		}
 		file_proto_dto_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListRequest); i {
+			switch v := v.(*ListProductsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -443,7 +547,7 @@ func file_proto_dto_proto_init() {
 			}
 		}
 		file_proto_dto_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListResponse); i {
+			switch v := v.(*ListProductsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -455,6 +559,30 @@ func file_proto_dto_proto_init() {
 			}
 		}
 		file_proto_dto_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StreamProductsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_dto_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StreamProductsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_dto_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Product); i {
 			case 0:
 				return &v.state
@@ -473,7 +601,7 @@ func file_proto_dto_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_proto_dto_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -495,110 +623,174 @@ var _ grpc.ClientConnInterface
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion6
 
-// ServerClient is the client API for Server service.
+// ProductServiceClient is the client API for ProductService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type ServerClient interface {
-	Fetch(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*FetchResponse, error)
-	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
+type ProductServiceClient interface {
+	Fetch(ctx context.Context, in *FetchDataRequest, opts ...grpc.CallOption) (*FetchDataResponse, error)
+	List(ctx context.Context, in *ListProductsRequest, opts ...grpc.CallOption) (*ListProductsResponse, error)
+	Stream(ctx context.Context, in *StreamProductsRequest, opts ...grpc.CallOption) (ProductService_StreamClient, error)
 }
 
-type serverClient struct {
+type productServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewServerClient(cc grpc.ClientConnInterface) ServerClient {
-	return &serverClient{cc}
+func NewProductServiceClient(cc grpc.ClientConnInterface) ProductServiceClient {
+	return &productServiceClient{cc}
 }
 
-func (c *serverClient) Fetch(ctx context.Context, in *FetchRequest, opts ...grpc.CallOption) (*FetchResponse, error) {
-	out := new(FetchResponse)
-	err := c.cc.Invoke(ctx, "/dto.Server/Fetch", in, out, opts...)
+func (c *productServiceClient) Fetch(ctx context.Context, in *FetchDataRequest, opts ...grpc.CallOption) (*FetchDataResponse, error) {
+	out := new(FetchDataResponse)
+	err := c.cc.Invoke(ctx, "/dto.ProductService/Fetch", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *serverClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
-	out := new(ListResponse)
-	err := c.cc.Invoke(ctx, "/dto.Server/List", in, out, opts...)
+func (c *productServiceClient) List(ctx context.Context, in *ListProductsRequest, opts ...grpc.CallOption) (*ListProductsResponse, error) {
+	out := new(ListProductsResponse)
+	err := c.cc.Invoke(ctx, "/dto.ProductService/List", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ServerServer is the server API for Server service.
-type ServerServer interface {
-	Fetch(context.Context, *FetchRequest) (*FetchResponse, error)
-	List(context.Context, *ListRequest) (*ListResponse, error)
+func (c *productServiceClient) Stream(ctx context.Context, in *StreamProductsRequest, opts ...grpc.CallOption) (ProductService_StreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_ProductService_serviceDesc.Streams[0], "/dto.ProductService/Stream", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &productServiceStreamClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
 }
 
-// UnimplementedServerServer can be embedded to have forward compatible implementations.
-type UnimplementedServerServer struct {
+type ProductService_StreamClient interface {
+	Recv() (*StreamProductsResponse, error)
+	grpc.ClientStream
 }
 
-func (*UnimplementedServerServer) Fetch(context.Context, *FetchRequest) (*FetchResponse, error) {
+type productServiceStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *productServiceStreamClient) Recv() (*StreamProductsResponse, error) {
+	m := new(StreamProductsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// ProductServiceServer is the server API for ProductService service.
+type ProductServiceServer interface {
+	Fetch(context.Context, *FetchDataRequest) (*FetchDataResponse, error)
+	List(context.Context, *ListProductsRequest) (*ListProductsResponse, error)
+	Stream(*StreamProductsRequest, ProductService_StreamServer) error
+}
+
+// UnimplementedProductServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedProductServiceServer struct {
+}
+
+func (*UnimplementedProductServiceServer) Fetch(context.Context, *FetchDataRequest) (*FetchDataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Fetch not implemented")
 }
-func (*UnimplementedServerServer) List(context.Context, *ListRequest) (*ListResponse, error) {
+func (*UnimplementedProductServiceServer) List(context.Context, *ListProductsRequest) (*ListProductsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
-
-func RegisterServerServer(s *grpc.Server, srv ServerServer) {
-	s.RegisterService(&_Server_serviceDesc, srv)
+func (*UnimplementedProductServiceServer) Stream(*StreamProductsRequest, ProductService_StreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method Stream not implemented")
 }
 
-func _Server_Fetch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FetchRequest)
+func RegisterProductServiceServer(s *grpc.Server, srv ProductServiceServer) {
+	s.RegisterService(&_ProductService_serviceDesc, srv)
+}
+
+func _ProductService_Fetch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FetchDataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServerServer).Fetch(ctx, in)
+		return srv.(ProductServiceServer).Fetch(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dto.Server/Fetch",
+		FullMethod: "/dto.ProductService/Fetch",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServerServer).Fetch(ctx, req.(*FetchRequest))
+		return srv.(ProductServiceServer).Fetch(ctx, req.(*FetchDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Server_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListRequest)
+func _ProductService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListProductsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServerServer).List(ctx, in)
+		return srv.(ProductServiceServer).List(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dto.Server/List",
+		FullMethod: "/dto.ProductService/List",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServerServer).List(ctx, req.(*ListRequest))
+		return srv.(ProductServiceServer).List(ctx, req.(*ListProductsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Server_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "dto.Server",
-	HandlerType: (*ServerServer)(nil),
+func _ProductService_Stream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamProductsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ProductServiceServer).Stream(m, &productServiceStreamServer{stream})
+}
+
+type ProductService_StreamServer interface {
+	Send(*StreamProductsResponse) error
+	grpc.ServerStream
+}
+
+type productServiceStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *productServiceStreamServer) Send(m *StreamProductsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+var _ProductService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "dto.ProductService",
+	HandlerType: (*ProductServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Fetch",
-			Handler:    _Server_Fetch_Handler,
+			Handler:    _ProductService_Fetch_Handler,
 		},
 		{
 			MethodName: "List",
-			Handler:    _Server_List_Handler,
+			Handler:    _ProductService_List_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Stream",
+			Handler:       _ProductService_Stream_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "proto/dto.proto",
 }
