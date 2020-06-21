@@ -162,11 +162,4 @@ func main() {
 		defer listener.Close()
 	}()
 	log.Println("Server succesfully started on port :", port)
-	//// Create a channel to receive OS signals
-	//c := make(chan os.Signal)
-	//signal.Notify(c, os.Interrupt)
-	//<-c
-	//// After receiving CTRL+C Properly stop the server
-	//log.Println("\nStopping the server...")
-	//log.Println("Done.")
 }
