@@ -11,7 +11,8 @@ import (
 const DBNAME = "test"
 
 func Connect() (client *mongo.Client) {
-	clientOptions := options.Client().ApplyURI("mongodb://192.168.1.16:27017")
+
+	clientOptions := options.Client().ApplyURI("mongodb://mongodb:27017")
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatalf("[-] Error while connecting to the database: %v", err)
@@ -21,7 +22,6 @@ func Connect() (client *mongo.Client) {
 		log.Fatalf("[-] Ping error: %v", err)
 	}
 	log.Println("[+] Succesfully connected to the database.")
-
 	return client
 }
 
