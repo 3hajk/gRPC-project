@@ -1,70 +1,71 @@
 version: '3.3'
 services:
-
-  registrator:
-    image: gliderlabs/registrator:vendor
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
-    command: -ip=docker.for.mac.localhost -deregister=always -cleanup -tags=registrator consul://consul:8500
-    networks:
-      grpc:
-
-  consul:
-    image: consul:1.0.6
-    restart: always
-    ports:
-      - 127.0.0.1:8500:8500
-    networks:
-      grpc:
-
   traefik:
-    image: traefik:1.6
+    image: library/traefik:latest
+    container_name: "traefik"
     restart: always
     ports:
       - 127.0.0.1:8080:8080 # UI
       - 127.0.0.1:80:80 # HTTP
     volumes:
-      - $PWD/traefik.toml:/etc/traefik/traefik.toml
-      - /var/run/docker.sock:/var/run/docker.sock
+      - "./traefik/traefik.toml:/etc/traefik/traefik.toml"
+      - "./traefik/dyn.toml:/etc/traefik/dyn.toml"
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       grpc:
         aliases:
           - frontend.local
 
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    labels:
+      - traefik.frontend.create=false
+      - traefik.enable=false
+    volumes:
+      - "mongodb_data:/Users/3hak/data/db"
+    networks:
+      - grpc
+
   server:
     image: grpc-project/grpc-server:latest
     ports:
       - 127.0.0.1::50051
+    labels:
+      - traefik.tags=api
+      - traefik.tags=grpc
+      - traefik.enable=true
+      - traefik.backend=backend
+      - traefik.docker.network=backend.local
+      - traefik.frontend.rule=Host:frontend.local
+      - traefik.port=50051
+      - traefik.default.protocol=http
     environment:
       - PORT=:50051
     networks:
       grpc:
         aliases:
           - backend.local
-  mongodb:
-    image: mongo:latest
-    container_name: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - "mongodb_data:/Users/3hak/data/db"
-    networks:
-      - grpc
-
   server1:
     image: grpc-project/grpc-server:latest
     ports:
       - 127.0.0.1::50052
     environment:
       - PORT=:50052
+    labels:
+      - traefik.tags=api
+      - traefik.tags=grpc
+      - traefik.enable=true
+      - traefik.backend=backend
+      - traefik.docker.network=backend.local
+      - traefik.frontend.rule=Host:frontend.local
+      - traefik.port=50052
+      - traefik.default.protocol=http
     networks:
       grpc:
         aliases:
           - backend.local
-
-
-
 
 volumes:
   mongodb_data:

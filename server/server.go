@@ -9,7 +9,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -64,7 +63,7 @@ func (s *routeGuideServer) Fetch(ctx context.Context, req *pb.FetchDataRequest) 
 			Count:      1,
 		}
 		fmt.Println(item)
-		err = db.InsertProductToTheDB(ctx, s.db, item)
+		err = db.InsertProductToDB(ctx, s.db, item)
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -73,38 +72,16 @@ func (s *routeGuideServer) Fetch(ctx context.Context, req *pb.FetchDataRequest) 
 }
 
 func (s *routeGuideServer) List(ctx context.Context, req *pb.ListProductsRequest) (*pb.ListProductsResponse, error) {
-
-	collection := s.db.Database(db.DBNAME).Collection("products")
 	skip := req.GetPaging().GetSkip()
 	limit := req.GetPaging().GetLimit()
-	opts := &options.FindOptions{
-		Skip:  &skip,
-		Limit: &limit,
-		Sort:  bson.M{req.GetSorting().GetName(): req.GetSorting().GetDirect()},
-	}
-	cursor, err := collection.Find(ctx, bson.D{}, opts)
+	data, err := db.GetProductFromDB(ctx, s.db, skip, limit, req.GetSorting().GetName(), req.GetSorting().GetDirect())
 	if err != nil {
 		log.Println("Couldn't get sugar levels", "err", err)
 		return nil, err
 	}
-	defer cursor.Close(ctx)
-	results := make([]*pb.Product, 0, 0)
-	for cursor.Next(context.Background()) {
-		var result = new(db.ProductItem)
-		err := cursor.Decode(result)
-		if err != nil {
-			break
-		}
-		results = append(results, &pb.Product{
-			Name:        result.Name,
-			Price:       float32(result.Price),
-			LastUpdate:  result.LastUpdate.T,
-			ChangePrice: int32(result.Count),
-		})
-	}
 	return &pb.ListProductsResponse{
-		PageSize: int32(len(results)),
-		List:     results,
+		PageSize: int32(len(data)),
+		List:     data,
 	}, nil
 }
 

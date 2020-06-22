@@ -1,0 +1,12 @@
+#[http]
+#  [http.routers]
+#    [http.routers.routerTest]
+#      service = "srv-grpc"
+#      rule = "Host(`frontend.local`)"
+#
+#  [http.services]
+#    [http.services.srv-grpc]
+#      [http.services.srv-grpc.loadBalancer]
+#        [[http.services.srv-grpc.loadBalancer.servers]]
+#          url = "h2c://backend.local:50051"
+#          url = "h2c://backend.local:50052"
