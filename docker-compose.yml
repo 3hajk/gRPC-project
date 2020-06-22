@@ -8,8 +8,8 @@ services:
       - 127.0.0.1:8080:8080 # UI
       - 127.0.0.1:80:80 # HTTP
     volumes:
-      - "./traefik/traefik.toml:/etc/traefik/traefik.toml"
-      - "./traefik/dyn.toml:/etc/traefik/dyn.toml"
+      - ./traefik/traefik.toml:/etc/traefik/traefik.toml
+      - ./traefik/dyn.toml:/etc/traefik/dyn.toml
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       grpc:
@@ -36,6 +36,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.server.rule=Host(`example.com`)
       - traefik.http.routers.server.entrypoints=web
+      - traefik.http.services.server.loadbalancer.server.scheme=h2c
       - traefik.http.services.server.loadbalancer.server.port=50051
     environment:
       - PORT=:50051
@@ -53,6 +54,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.server1.rule=Host(`example.com`)
       - traefik.http.routers.server1.entrypoints=web
+      - traefik.http.services.server1.loadbalancer.server.scheme=h2c
       - traefik.http.services.server1.loadbalancer.server.port=50052
     networks:
       grpc:

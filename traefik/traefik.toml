@@ -13,8 +13,7 @@
 
 [providers]
   [providers.docker]
-    exposedByDefault = false
-    swarmMode = true
+    exposedByDefault = true
 
   [providers.file]
     filename = "/etc/traefik/dyn.toml"
