@@ -8,10 +8,13 @@
 
   [entrypoints.websecure]
     address = ":443"
+[log]
+  level = "DEBUG"
 
 [providers]
   [providers.docker]
     exposedByDefault = false
+    swarmMode = true
 
   [providers.file]
     filename = "/etc/traefik/dyn.toml"

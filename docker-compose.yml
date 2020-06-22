@@ -33,14 +33,10 @@ services:
     ports:
       - 127.0.0.1::50051
     labels:
-      - traefik.tags=api
-      - traefik.tags=grpc
       - traefik.enable=true
-      - traefik.backend=backend
-      - traefik.docker.network=backend.local
-      - traefik.frontend.rule=Host:frontend.local
-      - traefik.port=50051
-      - traefik.default.protocol=http
+      - traefik.http.routers.server.rule=Host(`example.com`)
+      - traefik.http.routers.server.entrypoints=web
+      - traefik.http.services.server.loadbalancer.server.port=50051
     environment:
       - PORT=:50051
     networks:
@@ -54,14 +50,10 @@ services:
     environment:
       - PORT=:50052
     labels:
-      - traefik.tags=api
-      - traefik.tags=grpc
       - traefik.enable=true
-      - traefik.backend=backend
-      - traefik.docker.network=backend.local
-      - traefik.frontend.rule=Host:frontend.local
-      - traefik.port=50052
-      - traefik.default.protocol=http
+      - traefik.http.routers.server1.rule=Host(`example.com`)
+      - traefik.http.routers.server1.entrypoints=web
+      - traefik.http.services.server1.loadbalancer.server.port=50052
     networks:
       grpc:
         aliases:
