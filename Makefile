@@ -21,6 +21,14 @@ print:
 	@echo VENDOR=${VENDOR}
 
 build-server:
+	cd server && docker build -t grpc-project/grpc-server --build-arg VERSION="${VERSION}" \
+    --build-arg BUILD_DATE="${BUILD_DATE}" \
+    --build-arg VCS_URL="${VCS_URL}" \
+    --build-arg VCS_REF="${VCS_REF}" \
+    --build-arg NAME="${NAME}" \
+    --build-arg VENDOR="${VENDOR}" .
+
+build-no-cache:
 	cd server && docker build --no-cache -t grpc-project/grpc-server --build-arg VERSION="${VERSION}" \
     --build-arg BUILD_DATE="${BUILD_DATE}" \
     --build-arg VCS_URL="${VCS_URL}" \
